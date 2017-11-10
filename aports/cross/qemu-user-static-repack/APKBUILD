@@ -1,12 +1,17 @@
 pkgname=qemu-user-static-repack
 pkgver=2.8
-_debver=${pkgver}+dfsg-6+deb9u2_amd64
-pkgrel=9
+##############################################################################
+# WARNING: original file is based on x86_64 architecture, here values have 
+#          been overwritten for x86. Better solution: add suffix to package,
+#          and keep both
+##############################################################################
+_debver=${pkgver}+dfsg-7_i386
+pkgrel=8
 pkgdesc="QEMU user mode emulation binaries (static version)"
-arch=x86_64
+arch=x86
 url="https://wiki.debian.org/DebianKernel/ARMMP"
 license="GPL2"
-source="https://deb.debian.org/debian/pool/main/q/qemu/qemu-user-static_${_debver}.deb"
+source="https://ftp.us.debian.org/debian/pool/main/q/qemu/qemu-user-static_${_debver}.deb"
 makedepends="tar xz"
 subpackages="$pkgname-doc $pkgname-binfmt:binfmt:noarch"
 options="!check"
@@ -50,4 +55,4 @@ binfmt() {
 		"$pkgdir-binfmt/usr/share/qemu-user-binfmt.txt"
 }
 
-sha512sums="530b7e921346702616ac643a2034ea996d04baf5fb21b9de3b2d69116368cb26b3e613a19569dd7a7eaf2aa5fb113006928cb7672298dc7bfa1b4a80d2385967  qemu-user-static_2.8+dfsg-6+deb9u2_amd64.deb"
+sha512sums="7b9ead3e834c32dd249456a73153fa27ff1dc7cc5b281ddbcd62f943c3283512fcce91eefb0790d35957763b74d537b475fe49cccecb9d5e4216d98028c8adaf qemu-user-static_2.8+dfsg-7_i386.deb"

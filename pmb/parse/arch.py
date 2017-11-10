@@ -25,6 +25,8 @@ def alpine_native():
     ret = ""
 
     mapping = {
+        "i686": "x86",
+        "x86": "x86",
         "x86_64": "x86_64",
         "aarch64": "aarch64",
         "armv7l": "armhf"
@@ -55,6 +57,7 @@ def alpine_to_debian(arch):
     """
 
     mapping = {
+        "x86" : "i686",
         "x86_64": "amd64",
         "armhf": "arm",
         "aarch64": "aarch64",
@@ -106,12 +109,14 @@ def alpine_to_hostspec(arch):
 
 
 def cpu_emulation_required(args, arch):
+    
     # Obvious case: host arch is target arch
     if args.arch_native == arch:
         return False
 
     # Other cases: host arch on the left, target archs on the right
     not_required = {
+        "x86": ["x86"],
         "x86_64": ["x86"],
         "aarch64": ["armel", "armhf", "armv7"],
     }
@@ -136,6 +141,9 @@ def uname_to_qemu(arch):
         "armhf": "arm",
         "x86_64": "x86_64",
         "amd64": "x86_64",
+        "x86" : "x86",
+        "i686" : "x86",
+        "i586" : "x86"
     }
     if arch in mapping:
         return mapping[arch]
@@ -153,9 +161,11 @@ def qemu_to_pmos_device(arch):
         "arm": "qemu-vexpress",
         "aarch64": "qemu-aarch64",
         "x86_64": "qemu-amd64",
+        "x86": "qemu-i686"
     }
     if arch in mapping:
         return mapping[arch]
 
     raise ValueError("Can not map QEMU value '" + arch + "'"
                      " to the right postmarketOS device")
+
